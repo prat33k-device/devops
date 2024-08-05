@@ -1,0 +1,12 @@
+apiVersion: v1                           # each API version defines a set od objects we can use
+kind: Pod                                # type of object
+metadata:                                # used for naming the pod and stuff, may come handy in logging
+  name: client-pod
+  labels:                                # label:selector system is used to connect 2 objects in multiple config files in k8s
+    component: web                       # this component:web key-value pair is arbitary, i.e. we could have used any key value pair eg-> windows:sucks
+spec:
+  containers:                            # list of containers going to run inside the pod
+    - name: client                       # we can reference to this name if we want to reference this container
+      image: stephengrider/multi-client  # docker image of container (local/DockerHub)
+      ports:
+        - containerPort: 3000            # expose this port to the outside world (can't update this while runnuing)

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service              # object type
+metadata:
+  name: client-node-port
+spec:
+  type: NodePort           # service type. NodePort expose a service on a static port on each node's IP address. Only used for DEV environments
+  ports:
+    - port: 3050           # another Pod can access on this port in order to access our multi-client Pod
+      targetPort: 3000     # send all incoming traffic to targetPort inside the multi-client Pod
+      nodePort: 31515      # outside world can access to this port to access our application. Random (30000 - 32767). If not defined, will take a random value between the allowed values
+  selector:                # select the object who have this component:web label
+    component: web         # direct all traffic to this object

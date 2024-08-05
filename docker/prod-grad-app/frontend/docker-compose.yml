@@ -1,0 +1,19 @@
+version: '3'
+services:
+  web:     # container 1 (for runtime)
+    build:                          # build image from docker image
+      context: .                    # define docker context
+      dockerfile: Dockerfile.dev    # docker file name
+    ports:
+      - 3000:3000
+    volumes:
+      - /app/node_modules           # don't mount anything at this directory inside container, keep the original onw which is inside the container
+      - .:/app                      # we are mounting our code as volume but still keep the COPY instrucation in the docker file just in case in furture we don't use docker-compose
+  tests:     # container 2 (to run tests)
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "run", "test"] # overwrite the primary command

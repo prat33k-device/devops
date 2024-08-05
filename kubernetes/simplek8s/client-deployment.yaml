@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-deployment
+spec:
+  replicas: 1                       # Number of identical Pods that has to be spawn
+  selector:                         # for Deployment to keep track of spawned Pods. This targets labels in spec.template
+    matchLabels:
+      component: web
+  template:                         # Configs of every Pod that is created by this Deployment
+    metadata:
+      labels:
+        component: web
+    spec:
+      containers:
+        - name: client
+          image: stephengrider/multi-client
+          ports:
+            - containerPort: 3000  # can update this without bringing down the Pods
