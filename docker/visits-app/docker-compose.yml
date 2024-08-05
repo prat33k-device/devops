@@ -1,0 +1,11 @@
+version: '3'                       # use this version of docker compose
+services:                          # here we define the containers
+  redis-server:                    # name of service
+    image: 'redis'
+  node-app:
+    restart: unless-stopped        # always restart the container unless stopped manually
+    build: .                       # build this image and provide the build context
+    ports:
+      - "3000:8081"                # port mapping for this container
+
+# network between both the containers is established automatically
